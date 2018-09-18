@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="text-center">
+        <h1>Is It Safe Out?</h1>
+        <p>
+            This tool uses government guidelines to evaluate the weather safety for children to 
+            play outside. Currently, the tool only evaluates the heat index and wind chill factor.
+            I am currently working on adding weather alerts and more variables to further
+            evaluate the current weather safety. Regardless of the output of this tool,
+            always use your best judgement when deciding if it is safe for children to play outside.  
+          </p>
+        <input [(ngModel)]="zipCode" type="text" maxlength="5" class="zip-code" placeholder="Enter zip code">
+      </div>
+      <br />
+    <div class="text-center">
+      <button (click)="isItSafe()" type="button" class="btn btn-primary">Is it safe out?</button>
+    </div>
+    {{safetyLevel}}
+  <div class="col-md-3"></div>      
+</div>
