@@ -41,5 +41,5 @@ server.listen(port, () => console.log(`API running on localhost:${port}`));
 
 
 // Create link to Angular build directory
-var distDir = __dirname + "/dist/";
+var distDir = __dirname + "dist/";
 app.use(express.static(distDir));
