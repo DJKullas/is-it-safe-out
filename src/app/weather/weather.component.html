@@ -3,6 +3,14 @@
     <div class="col-md-6">
       <div class="text-center">
         <h1>Is It Safe Out?</h1>
+      </div>
+        <div class="text-center zip-code-input">
+            <input [(ngModel)]="zipCode" type="text" maxlength="5" class="zip-code" placeholder="Enter zip code">
+          </div>
+        <div class="text-center">
+              <button (click)="isItSafe()" type="button" class="btn btn-primary">Is it safe out?</button>
+        </div>
+      <div *ngIf="safetyLevel == null">
         <p>
             This tool uses government guidelines to evaluate the weather safety for children to 
             play outside. Currently, the tool only evaluates the heat index and wind chill factor.
@@ -10,12 +18,69 @@
             evaluate the current weather safety. Regardless of the output of this tool,
             always use your best judgement when deciding if it is safe for children to play outside.  
           </p>
-        <input [(ngModel)]="zipCode" type="text" maxlength="5" class="zip-code" placeholder="Enter zip code">
       </div>
-      <br />
-    <div class="text-center">
-      <button (click)="isItSafe()" type="button" class="btn btn-primary">Is it safe out?</button>
-    </div>
-    {{safetyLevel}}
+      <div class="text-center" [@fadeIn]>
+          <h3 class="safety-header" [ngStyle]="{color: safetyLevel == 'Yellow' ? '#f4f142' : safetyLevel}">
+            {{safetyLevel}}
+          </h3>
+          </div>
+          <div *ngIf="safetyLevel == 'Green'" [@fadeIn]>
+            <p>
+              Children may play outdoors and be comfortable. Watch for signs of children becoming
+              uncomfortable while playing. Use precautions regarding clothing, sunscreen, and beverages
+              for all child age groups. 
+            </p>
+            <p>
+                INFANTS AND TODDLERS are unable to tell the child care provider if they are too hot or cold.
+                Children become fussy when uncomfortable. Infants/toddlers will tolerate shorter periods of outdoor
+                play. Dress infants/toddlers in lightweight cotton or cotton-like fabrics during the warmer months. In
+                cooler or cold months dress infants in layers to keep them warm. Protect infants from the sun by limiting
+                the amount of time outdoors and playing in shaded areas. Give beverages when playing outdoors.            
+            </p>
+            <p>
+                YOUNG CHILDREN need reminders to stop playing, drink a beverage, and apply more sunscreen. 
+            </p>
+            <p>
+                OLDER CHILDREN need a firm approach to wearing proper clothing for the weather (they may want
+                to play without coats, hats or mittens). They may resist applying sunscreen and drinking beverages
+                while outdoors. 
+            </p>
+          </div>
+          <div *ngIf="safetyLevel == 'Yellow'" [@fadeIn]>
+            <p>
+                Use caution and closely observe the children for signs of being too hot or cold
+                while outdoors. Clothing, sunscreen, and beverages are important. Shorten the length of outdoor
+                time. 
+            </p>
+            <p>
+                INFANTS AND TODDLERS should use precautions outlined in Condition Green such as wearing lightweight
+                cotton or cotton-like fabrics during warmer months and layers in the colder months. Clothing, sunscreen, and
+                beverages are important. Shorten the length of time for outdoor play.
+            </p>
+            <p>
+                YOUNG CHILDREN may insist they are not too hot or cold because they are enjoying playtime.
+                Child care providers need to structure the length of time for outdoor play for the young child.
+            </p>
+            <p>
+                OLDER CHILDREN need a firm approach to wearing proper clothing for the weather (they may want
+                to play without coats, hats or mittens), applying sunscreen, and drinking liquids while playing outdoors.                
+            </p>
+          </div>
+          <div *ngIf="safetyLevel == 'Red'" [@fadeIn]>
+            <p>
+                Most children should not play outdoors due to the health risk. 
+            </p>
+            <p>
+                INFANTS AND TODDLERS should play indoors and have ample space for large motor play. 
+            </p>
+            <p>
+                YOUNG CHILDREN may ask to play outside and do not understand the potential danger of weather
+                conditions.
+            </p>
+            <p>
+                OLDER CHILDREN may play outdoors for very short periods of time if they are properly dressed,
+                have plenty of fluids. Child care providers must be vigilant about maximum protection of children.
+            </p>
+          </div>
   <div class="col-md-3"></div>      
 </div>

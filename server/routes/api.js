@@ -1,10 +1,9 @@
-const config = require('../../src/secret.config.js');
 const express = require('express');
 const router = express.Router();
 
 // declare axios for making http requests
 const axios = require('axios');
-const API = `https://api.openweathermap.org/data/2.5/weather?APPID=${config.weatherApiKey}&units=imperial&zip=`;
+const API = `https://api.openweathermap.org/data/2.5/weather?APPID=${process.env.WEATHER_KEY}&units=imperial&zip=`;
 
 /* GET api listing. */
 router.get('/', (req, res) => {
@@ -12,7 +11,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/weather', (req, res) => {
-  console.log(config);
+  console.log(process.env.WEATHER_KEY);
   axios.get(`${API}${req.query.zipCode},us`)
     .then(weather => {
         res.status(200).json(weather.data);

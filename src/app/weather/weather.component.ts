@@ -1,16 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../weather.service';
+import { SafetyLevel } from './safety.enum';
+import {style, state, animate, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.css']
+  styleUrls: ['./weather.component.css'],
+  animations: [
+    // the fade-in/fade-out animation.
+    trigger('fadeIn', [
+      state('in', style({opacity: 1})),
+      transition(':enter', [
+        style({opacity: 0}),
+        animate(600)
+      ])
+    ])
+  ]
 })
 export class WeatherComponent implements OnInit {
   temperature: number; 
   humidity: number;
   windSpeed: number;
-  safetyLevel: string;  // make enum later
+  safetyLevel: SafetyLevel; 
   zipCode: string;
 
   constructor(private readonly weatherService: WeatherService) { }
@@ -41,32 +53,29 @@ export class WeatherComponent implements OnInit {
   }
 
   safetyCheck() {
-
-    if (this.temperature >= 80) {
-      const roundedHeatIndex = Math.round(this.calculateHeatIndex());
-      if (roundedHeatIndex >= 90 && roundedHeatIndex < 100) {
-        this.safetyLevel = "YELLOW";
-      } 
-      else if (roundedHeatIndex > 100) {
-        this.safetyLevel = "RED";
+    if (this.temperature >= 80 || this.temperature <= 40) {
+      if (this.temperature >= 80) {
+        const roundedHeatIndex = Math.round(this.calculateHeatIndex());
+        if (roundedHeatIndex >= 90 && roundedHeatIndex < 100) {
+          this.safetyLevel = SafetyLevel.Yellow;
+        } 
+        else if (roundedHeatIndex >= 100) {
+          this.safetyLevel = SafetyLevel.Red;
+        }
+      }
+  
+      if (this.temperature <= 40) {
+        const roundedWindChill = Math.round(this.calculateWindChill());
+        if (roundedWindChill < 32 && roundedWindChill >= 13) {
+          this.safetyLevel = SafetyLevel.Yellow;
+        }
+        else if (roundedWindChill < 13) {
+          this.safetyLevel = SafetyLevel.Red;
+        } 
       }
     }
-
-    if (this.temperature <= 40) {
-      const roundedWindChill = Math.round(this.calculateWindChill());
-      if (roundedWindChill < 32 && roundedWindChill >= 13) {
-        this.safetyLevel = "YELLOW";
-      }
-      else if (roundedWindChill < 13) {
-        this.safetyLevel = "RED";
-      } 
-      else {
-        this.safetyLevel = "GREEN";
-      }
-    }
-
-    if (this.safetyLevel == null) {
-      this.safetyLevel = "GREEN";
+    else {
+      this.safetyLevel = SafetyLevel.Green;
     }
 
     return this.safetyLevel;

@@ -1,3 +1,7 @@
 .zip-code {
     text-align: center;
 }
+
+.zip-code-input {
+    margin-bottom: 5px;
+}
