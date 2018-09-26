@@ -4,12 +4,15 @@
       <div class="text-center">
         <h1>Is It Safe Out?</h1>
       </div>
-        <div class="text-center zip-code-input">
-            <input [(ngModel)]="zipCode" type="text" maxlength="5" class="zip-code" placeholder="Enter zip code">
+        <form (ngSubmit)="isItSafe()">
+          <div class="text-center zip-code-input">
+              <input name="zipCode" [(ngModel)]="zipCode" type="text" maxlength="5" autofocus="autofocus" class="zip-code" placeholder="Enter zip code">
+            </div>
+          <div class="text-center">
+                <button type="submit" class="btn btn-primary">Is it safe out?</button>
           </div>
-        <div class="text-center">
-              <button (click)="isItSafe()" type="button" class="btn btn-primary">Is it safe out?</button>
-        </div>
+        </form>
+    
       <div *ngIf="safetyLevel == null">
         <p>
             This tool uses government guidelines to evaluate the weather safety for children to 
@@ -80,6 +83,11 @@
             <p>
                 OLDER CHILDREN may play outdoors for very short periods of time if they are properly dressed,
                 have plenty of fluids. Child care providers must be vigilant about maximum protection of children.
+            </p>
+          </div>
+          <div *ngIf="safetyLevel == 'Error'" [@fadeIn]>
+            <p>
+              The zip code entered was invalid. Please enter a valid zip code and try again.
             </p>
           </div>
   <div class="col-md-3"></div>      

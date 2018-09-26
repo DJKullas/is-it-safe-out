@@ -14,11 +14,12 @@ router.get('/weather', (req, res) => {
   console.log(process.env.WEATHER_KEY);
   axios.get(`${API}${req.query.zipCode},us`)
     .then(weather => {
+      console.log("GOOD");
         res.status(200).json(weather.data);
     })
     .catch(error => {
       console.log(error);
-      res.status(500).send(error)
+      res.status(500).send("Invalid zip code.");
     });
 });
 

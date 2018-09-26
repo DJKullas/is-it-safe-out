@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../weather.service';
 import { SafetyLevel } from './safety.enum';
-import {style, state, animate, transition, trigger} from '@angular/animations';
+import { style, state, animate, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-weather',
@@ -87,7 +87,11 @@ export class WeatherComponent implements OnInit {
       this.humidity = weather.main.humidity;
       this.windSpeed = weather.wind.speed;
       this.safetyCheck();
-      });
+      },
+    error => {
+      console.log("DEF");
+      this.safetyLevel = SafetyLevel.Error;
+    });
   }
 
   ngOnInit() {
