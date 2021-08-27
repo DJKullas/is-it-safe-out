@@ -53,14 +53,19 @@ export class WeatherComponent implements OnInit {
   }
 
   safetyCheck() {
+
+    var redOrYellow = false;
+
     if (this.temperature >= 80 || this.temperature <= 40) {
       if (this.temperature >= 80) {
         const roundedHeatIndex = Math.round(this.calculateHeatIndex());
         if (roundedHeatIndex >= 90 && roundedHeatIndex < 100) {
           this.safetyLevel = SafetyLevel.Yellow;
+          redOrYellow = true;
         } 
         else if (roundedHeatIndex >= 100) {
           this.safetyLevel = SafetyLevel.Red;
+          redOrYellow = true;
         }
       }
   
@@ -68,13 +73,16 @@ export class WeatherComponent implements OnInit {
         const roundedWindChill = Math.round(this.calculateWindChill());
         if (roundedWindChill < 32 && roundedWindChill >= 13) {
           this.safetyLevel = SafetyLevel.Yellow;
+          redOrYellow = true;
         }
         else if (roundedWindChill < 13) {
           this.safetyLevel = SafetyLevel.Red;
+          redOrYellow = true;
         } 
       }
     }
-    else {
+    
+    if (!redOrYellow) {
       this.safetyLevel = SafetyLevel.Green;
     }
 
